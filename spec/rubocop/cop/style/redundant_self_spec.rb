@@ -134,6 +134,14 @@ RSpec.describe RuboCop::Cop::Style::RedundantSelf do
       RUBY
     end
 
+    it 'accepts a self receiver used to distinguish from local variable for multiple assignment' do
+      expect_no_offenses(<<~RUBY)
+        def requested_specs
+          phone, area_code = parse_phone(self.phone)
+        end
+      RUBY
+    end
+
     it 'accepts a self receiver used to distinguish from an argument' do
       expect_no_offenses(<<~RUBY)
         def foo(bar)
